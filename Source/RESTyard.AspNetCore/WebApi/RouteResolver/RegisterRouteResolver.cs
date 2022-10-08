@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using RESTyard.AspNetCore.Exceptions;
@@ -133,8 +135,27 @@ namespace RESTyard.AspNetCore.WebApi.RouteResolver
                 return this.HandleUnknownRoute(lookupType);
             }
 
+            string routeUrl = null;
+            switch (routeInfo.IsExternalResource)
+            {
+                case true when (IDictionary<string, object>) routeKeys != null:
+                {
+                    var routeArguments = (IDictionary<string, object>) routeKeys;
+                    var externalUri = routeArguments.Values.Where(v => v is Uri).Cast<Uri>().FirstOrDefault();
+                    if (externalUri is null)
+                    {
+                        return this.HandleUnknownRoute(lookupType);
+                    }
+                    routeUrl = externalUri.ToString();
+                    break;
+                }
+                case true:
+                    return this.HandleUnknownRoute(lookupType);
+                default:
+                    routeUrl = this.urlHelper.RouteUrl(routeInfo.Name, routeKeys, hypermediaUrlConfig.Scheme, hypermediaUrlConfig.Host.ToUriComponent());
+                    break;
+            }
 
-            var routeUrl = this.urlHelper.RouteUrl(routeInfo.Name, routeKeys, hypermediaUrlConfig.Scheme, hypermediaUrlConfig.Host.ToUriComponent());
             if (routeUrl == null)
             {
                 throw new RouteResolverException($"Could not build route: '{routeInfo.Name}' with method {routeInfo.HttpMethod}");
