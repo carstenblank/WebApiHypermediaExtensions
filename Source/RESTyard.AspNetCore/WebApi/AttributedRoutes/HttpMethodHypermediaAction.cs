@@ -22,11 +22,16 @@ namespace RESTyard.AspNetCore.WebApi.AttributedRoutes
         ///     This type will be used to create a n instance of the producer and generate the key object used in a UrlHelper to
         ///     determine the final URL.
         /// </param>
+        /// <param name="isExternalResource">
+        ///     This will come in handy
+        /// </param>
         public HttpMethodHypermediaAction(
             IEnumerable<string> httpMethods,
             Type routeType,
-            Type routeKeyProducerType = null) : base(httpMethods)
+            Type routeKeyProducerType = null, 
+            bool isExternalResource = false) : base(httpMethods)
         {
+            IsExternalResource = isExternalResource;
             Init(routeType, routeKeyProducerType);
         }
 
@@ -55,6 +60,7 @@ namespace RESTyard.AspNetCore.WebApi.AttributedRoutes
             Init(routeType, routeKeyProducerType);
         }
 
+        public bool IsExternalResource { get; set; }
         public Type RouteType { get; private set; }
         public Type RouteKeyProducerType { get; private set; }
         
