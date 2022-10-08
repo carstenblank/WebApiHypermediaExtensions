@@ -49,15 +49,15 @@ namespace RESTyard.AspNetCore.WebApi.RouteResolver
                         AddRouteKeyProducer(method, httpGetHypermediaObject);
                         break;
                     case HttpPostHypermediaAction httpPostHypermediaAction:
-                        this.AddActionRoute(httpPostHypermediaAction.RouteType, httpPostHypermediaAction.Name, HttpMethod.POST, httpPostHypermediaAction.AcceptedMediaType);
+                        this.AddActionRoute(httpPostHypermediaAction.RouteType, httpPostHypermediaAction.Name, HttpMethod.POST, httpPostHypermediaAction.AcceptedMediaType, httpPostHypermediaAction.IsExternalResource);
                         AddRouteKeyProducer(method, httpPostHypermediaAction);
                         break;
                     case HttpDeleteHypermediaAction httpDeleteHypermediaAction:
-                        this.AddActionRoute(httpDeleteHypermediaAction.RouteType, httpDeleteHypermediaAction.Name, HttpMethod.DELETE, httpDeleteHypermediaAction.AcceptedMediaType);
+                        this.AddActionRoute(httpDeleteHypermediaAction.RouteType, httpDeleteHypermediaAction.Name, HttpMethod.DELETE, httpDeleteHypermediaAction.AcceptedMediaType, httpDeleteHypermediaAction.IsExternalResource);
                         AddRouteKeyProducer(method, httpDeleteHypermediaAction);
                         break;
                     case HttpPatchHypermediaAction httpPatchHypermediaAction:
-                        this.AddActionRoute(httpPatchHypermediaAction.RouteType, httpPatchHypermediaAction.Name, HttpMethod.PATCH, httpPatchHypermediaAction.AcceptedMediaType);
+                        this.AddActionRoute(httpPatchHypermediaAction.RouteType, httpPatchHypermediaAction.Name, HttpMethod.PATCH, httpPatchHypermediaAction.AcceptedMediaType, httpPatchHypermediaAction.IsExternalResource);
                         AddRouteKeyProducer(method, httpPatchHypermediaAction);
                         break;
                     case HttpGetHypermediaActionParameterInfo httpGetHypermediaActionParameterInfo:

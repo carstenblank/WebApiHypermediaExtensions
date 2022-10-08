@@ -31,7 +31,7 @@ namespace RESTyard.AspNetCore.WebApi.RouteResolver
             return true;
         }
 
-        public void AddActionRoute(Type hypermediaActionType, string routeName, HttpMethod httpMethod, string acceptableMediaType = null)
+        public void AddActionRoute(Type hypermediaActionType, string routeName, HttpMethod httpMethod, string acceptableMediaType = null, bool isExternalResource = false)
         {
             if (!IsHypermediaAction(hypermediaActionType) /*&& !IsGenericHypermediaAction(hypermediaActionType)*/)
             {
@@ -39,7 +39,7 @@ namespace RESTyard.AspNetCore.WebApi.RouteResolver
                     $"Type {hypermediaActionType} must derive from {typeof(HypermediaAction<>).Name}.");
             }
 
-            this.AddRoute(hypermediaActionType, new RouteInfo(routeName, httpMethod, acceptableMediaType));
+            this.AddRoute(hypermediaActionType, new RouteInfo(routeName, httpMethod, acceptableMediaType, isExternalResource));
         }
 
         private static bool IsHypermediaAction(Type hypermediaActionType)
